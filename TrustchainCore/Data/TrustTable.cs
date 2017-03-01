@@ -63,7 +63,7 @@ namespace TrustchainCore.Data
         public int Replace(TrustModel trust)
         {
             var command = new SQLiteCommand("REPLACE INTO " + TableName + " (trustid, version, script, issuerid, issuersignature, serverid, serversignature, timestamp) " +
-                "VALUES (@version, @script, @issuerid, @issuersignature, @serverid, @serversignature, @timestamp)", Connection);
+                "VALUES (@trustid, @version, @script, @issuerid, @issuersignature, @serverid, @serversignature, @timestamp)", Connection);
             command.Parameters.Add(new SQLiteParameter("@trustid", trust.TrustId));
             command.Parameters.Add(new SQLiteParameter("@version", trust.Head.Version));
             command.Parameters.Add(new SQLiteParameter("@script", trust.Head.Script));

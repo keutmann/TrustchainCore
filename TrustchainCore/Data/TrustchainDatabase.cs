@@ -122,6 +122,12 @@ namespace TrustchainCore.Data
             throw new ApplicationException("Not database connection found");
         }
 
+        /// <summary>
+        /// Opens a Connection to a database
+        /// If App.Config["test"] is true, then the database will be in memory and ignore the dbname.
+        /// </summary>
+        /// <param name="dbname"></param>
+        /// <returns></returns>
         public static TrustchainDatabase Open(string dbname = null)
         {
             if (App.Config["test"].ToBoolean())
@@ -146,7 +152,7 @@ namespace TrustchainCore.Data
             else
             {
                 var db = new TrustchainDatabase();
-                db.OpenConnection();
+                db.OpenConnection(dbname);
                 return db;
             }
         }

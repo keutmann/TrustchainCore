@@ -46,13 +46,12 @@ namespace TrustchainCoreTest.Workflow
             var json = JsonConvert.SerializeObject(TestContext);
             var controlState = JsonConvert.DeserializeObject<WorkflowContext>(json);
 
-            //var instance = Activator.CreateInstance(controlState.WF);
             Assert.IsTrue(controlState != null);
             Assert.IsTrue(TestContext.WorkflowQueue.Peek().GetType().FullName == controlState.WorkflowQueue.Peek().GetType().FullName);
             Assert.IsTrue(TestContext.Status == controlState.Status);
             Assert.IsTrue(TestContext.Logs.Count == controlState.Logs.Count);
-            Assert.IsTrue(TestContext.KeyValue["test"] == controlState.KeyValue["test"]);
-            Assert.IsTrue(TestContext.KeyValue["john"] == controlState.KeyValue["JOHN"]);
+            Assert.IsTrue(TestContext.KeyValue["test"]+"" == controlState.KeyValue["test"]+"");
+            Assert.IsTrue(TestContext.KeyValue["john"] as string == controlState.KeyValue["JOHN"] as string);
         }
     }
 }

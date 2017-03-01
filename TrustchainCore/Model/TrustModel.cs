@@ -6,7 +6,7 @@ namespace TrustchainCore.Model
     [JsonObject(MemberSerialization.OptIn)]
     public class TrustModel
     {
-        [JsonIgnore]
+        [JsonProperty(PropertyName = "trustid")]
         public byte[] TrustId { get; set; }
 
         [JsonProperty(PropertyName = "head")]

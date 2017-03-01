@@ -32,7 +32,7 @@ namespace TrustchainCore.Business
 
             var trustHash = new uint256(Trust.TrustId);
 
-            if (VerifySignature(trustHash, Trust.Issuer.Signature, Trust.Issuer.Id))
+            if (!VerifySignature(trustHash, Trust.Issuer.Signature, Trust.Issuer.Id))
             {
                 Errors.Add("Invalid issuer signature");
                 return Errors;
@@ -59,6 +59,11 @@ namespace TrustchainCore.Business
         public static byte[] GetHashOfBinary(byte[] data)
         {
             return Hashes.SHA256(Hashes.SHA256(data));
+        }
+
+        public static byte[] Sign(Key key, byte[] data)
+        {
+            return key.SignCompact(new uint256(GetHashOfBinary(data)));
         }
 
         public bool VerifySignature(uint256 hashkeyid, byte[] signature, byte[] address)
