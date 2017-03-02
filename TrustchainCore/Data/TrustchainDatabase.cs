@@ -76,8 +76,8 @@ namespace TrustchainCore.Data
             {
                 Connection = new SQLiteConnection(MemoryConnectionString);
                 Connection.Open();
-                Connection.EnableExtensions(true);
-                Connection.LoadExtension("SQLite.Interop.dll", "sqlite3_json_init");
+                //Connection.EnableExtensions(true);
+                //Connection.LoadExtension("SQLite.Interop.dll", "sqlite3_json_init");
                 return Connection;
             }
 
@@ -98,20 +98,22 @@ namespace TrustchainCore.Data
 
                 sb.DataSource = dbFilename;
                 var dbObject = App.Config["database"];
-                sb.Flags = SQLiteConnectionFlags.UseConnectionPool;
-                //tt.NoSharedFlags = false;
+                if (dbObject != null)
+                {
+                    sb.Flags = SQLiteConnectionFlags.UseConnectionPool;
+                    //tt.NoSharedFlags = false;
 
-                sb.JournalMode = (SQLiteJournalModeEnum)dbObject["journalmode"].ToInteger((int)SQLiteJournalModeEnum.Default);
-                sb.Pooling = dbObject["pooling"].ToBoolean(true);
-                sb.ReadOnly = dbObject["readonly"].ToBoolean(false);
-                sb.Add("cache", dbObject["cache"].ToStringValue("shared"));
-                sb.Add("Compress", dbObject["compress"].ToStringValue("False"));
-                sb.SyncMode = (SynchronizationModes)dbObject["syncmode"].ToInteger((int)SynchronizationModes.Normal);
+                    sb.JournalMode = (SQLiteJournalModeEnum)dbObject["journalmode"].ToInteger((int)SQLiteJournalModeEnum.Default);
+                    sb.Pooling = dbObject["pooling"].ToBoolean(true);
+                    sb.ReadOnly = dbObject["readonly"].ToBoolean(false);
+                    sb.Add("cache", dbObject["cache"].ToStringValue("shared"));
+                    sb.Add("Compress", dbObject["compress"].ToStringValue("False"));
+                    sb.SyncMode = (SynchronizationModes)dbObject["syncmode"].ToInteger((int)SynchronizationModes.Normal);
 
-                //sb.DefaultIsolationLevel = System.Data.IsolationLevel.ReadUncommitted;
-                //tt.DefaultDbType = System.Data.DbType.
-                //var dd = new SQLiteConnection(;
-
+                    //sb.DefaultIsolationLevel = System.Data.IsolationLevel.ReadUncommitted;
+                    //tt.DefaultDbType = System.Data.DbType.
+                    //var dd = new SQLiteConnection(;
+                }
                 Connection = new SQLiteConnection(sb.ConnectionString);
                 Connection.Open();
                 return Connection;
@@ -173,8 +175,10 @@ namespace TrustchainCore.Data
 
         public int Vacuum()
         {
-            SQLiteCommand command = new SQLiteCommand("vacuum;", Connection);
-            return command.ExecuteNonQuery();
+            using (SQLiteCommand command = new SQLiteCommand("vacuum;", Connection))
+            {
+                return command.ExecuteNonQuery();
+            }
         }
 
         public TrustModel GetTrust(byte[] issuerid, byte[] issuersignature)
@@ -188,7 +192,9 @@ namespace TrustchainCore.Data
         public virtual void Dispose()
         {
             if (!IsMemoryDatabase)
+            {
                 Connection.Dispose();
+            }
         }
     }
 }

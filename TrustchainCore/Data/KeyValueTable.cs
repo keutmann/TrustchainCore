@@ -28,34 +28,43 @@ namespace TrustchainCore.Data
                 "key TEXT NOT NULL," +
                 "value TEXT"+
                 ")";
-            var command = new SQLiteCommand(sql, Connection);
-            command.ExecuteNonQuery();
-
-            command = new SQLiteCommand("CREATE UNIQUE INDEX IF NOT EXISTS " + TableName+ "Key ON " + TableName + " (key)", Connection);
-            command.ExecuteNonQuery();
+            using (var command = new SQLiteCommand(sql, Connection))
+            {
+                command.ExecuteNonQuery();
+            }
+            using (var command = new SQLiteCommand("CREATE UNIQUE INDEX IF NOT EXISTS " + TableName + "Key ON " + TableName + " (key)", Connection))
+            { 
+                command.ExecuteNonQuery();
+            }
         }
 
         public int Put(string key, string value)
         {
-            var command = new SQLiteCommand("REPLACE INTO " + TableName + " (key, value) VALUES (@key, @value)", Connection);
-            command.Parameters.Add(new SQLiteParameter("@key", key));
-            command.Parameters.Add(new SQLiteParameter("@value", value));
-            return command.ExecuteNonQuery();
+            using (var command = new SQLiteCommand("REPLACE INTO " + TableName + " (key, value) VALUES (@key, @value)", Connection))
+            {
+                command.Parameters.Add(new SQLiteParameter("@key", key));
+                command.Parameters.Add(new SQLiteParameter("@value", value));
+                return command.ExecuteNonQuery();
+            }
         }
 
         public string Get(string key)
         {
-            var command = new SQLiteCommand("SELECT * FROM " + TableName + " WHERE key = @key", Connection);
-            command.Parameters.Add(new SQLiteParameter("@key", key));
+            using (var command = new SQLiteCommand("SELECT * FROM " + TableName + " WHERE key = @key", Connection))
+            {
+                command.Parameters.Add(new SQLiteParameter("@key", key));
 
-            return Query<string>(command, (reader) => reader.GetString("value")).FirstOrDefault();
+                return Query<string>(command, (reader) => reader.GetString("value")).FirstOrDefault();
+            }
         }
 
         public int Delete(string key)
         {
-            var command = new SQLiteCommand("DELETE FROM " + TableName + " WHERE key = @key", Connection);
-            command.Parameters.Add(new SQLiteParameter("@key", key));
-            return command.ExecuteNonQuery();
+            using (var command = new SQLiteCommand("DELETE FROM " + TableName + " WHERE key = @key", Connection))
+            {
+                command.Parameters.Add(new SQLiteParameter("@key", key));
+                return command.ExecuteNonQuery();
+            }
         }
 
     }

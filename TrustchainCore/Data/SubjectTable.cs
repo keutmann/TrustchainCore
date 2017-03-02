@@ -37,36 +37,33 @@ namespace TrustchainCore.Data
                 "scope TEXT," +
                 "trustid BLOB" +
                 ")";
-            var command = new SQLiteCommand(sql, Connection);
-            command.ExecuteNonQuery();
 
-            command = new SQLiteCommand("CREATE INDEX IF NOT EXISTS " + TableName + "TrustId ON " + TableName + " (trustid)", Connection);
-            command.ExecuteNonQuery();
-            command = new SQLiteCommand("CREATE INDEX IF NOT EXISTS " + TableName + "Id ON " + TableName + " (id)", Connection);
-            command.ExecuteNonQuery();
-            command = new SQLiteCommand("CREATE INDEX IF NOT EXISTS " + TableName + "IdType ON " + TableName + " (idtype)", Connection);
-            command.ExecuteNonQuery();
-            command = new SQLiteCommand("CREATE INDEX IF NOT EXISTS " + TableName + "Scope ON " + TableName + " (scope)", Connection);
-            command.ExecuteNonQuery();
+            ExecuteNonQuery(sql);
+            ExecuteNonQuery("CREATE INDEX IF NOT EXISTS " + TableName + "TrustId ON " + TableName + " (trustid)");
+            ExecuteNonQuery("CREATE INDEX IF NOT EXISTS " + TableName + "Id ON " + TableName + " (id)");
+            ExecuteNonQuery("CREATE INDEX IF NOT EXISTS " + TableName + "IdType ON " + TableName + " (idtype)");
+            ExecuteNonQuery("CREATE INDEX IF NOT EXISTS " + TableName + "Scope ON " + TableName + " (scope)");
         }
 
         public int Add(SubjectModel subject)
         {
-            var command = new SQLiteCommand("REPLACE INTO " + TableName + " (issuerid, id, signature, idtype, claim, cost, activate, expire, scope, trustid) " +
-                "VALUES (@issuerid, @id, @signature, @idtype, @claim, @cost, @activate, @expire, @scope, @trustid)", Connection);
+            using (var command = new SQLiteCommand("REPLACE INTO " + TableName + " (issuerid, id, signature, idtype, claim, cost, activate, expire, scope, trustid) " +
+                "VALUES (@issuerid, @id, @signature, @idtype, @claim, @cost, @activate, @expire, @scope, @trustid)", Connection))
+            {
 
-            command.Parameters.Add(new SQLiteParameter("@issuerid", subject.IssuerId));
-            command.Parameters.Add(new SQLiteParameter("@id", subject.Id));
-            command.Parameters.Add(new SQLiteParameter("@signature", subject.Signature));
-            command.Parameters.Add(new SQLiteParameter("@idtype", subject.IdType));
-            command.Parameters.Add(new SQLiteParameter("@claim", subject.Claim.SerializeObject()));
-            command.Parameters.Add(new SQLiteParameter("@cost", subject.Cost));
-            command.Parameters.Add(new SQLiteParameter("@activate", subject.Activate));
-            command.Parameters.Add(new SQLiteParameter("@expire", subject.Expire));
-            command.Parameters.Add(new SQLiteParameter("@scope", subject.Scope));
-            command.Parameters.Add(new SQLiteParameter("@trustid", subject.TrustId));
+                command.Parameters.Add(new SQLiteParameter("@issuerid", subject.IssuerId));
+                command.Parameters.Add(new SQLiteParameter("@id", subject.Id));
+                command.Parameters.Add(new SQLiteParameter("@signature", subject.Signature));
+                command.Parameters.Add(new SQLiteParameter("@idtype", subject.IdType));
+                command.Parameters.Add(new SQLiteParameter("@claim", subject.Claim.SerializeObject()));
+                command.Parameters.Add(new SQLiteParameter("@cost", subject.Cost));
+                command.Parameters.Add(new SQLiteParameter("@activate", subject.Activate));
+                command.Parameters.Add(new SQLiteParameter("@expire", subject.Expire));
+                command.Parameters.Add(new SQLiteParameter("@scope", subject.Scope));
+                command.Parameters.Add(new SQLiteParameter("@trustid", subject.TrustId));
 
-            return command.ExecuteNonQuery();
+                return command.ExecuteNonQuery();
+            }
         }
 
         //public IEnumerable<SubjectModel> Select(byte[] issuerId)
@@ -79,10 +76,12 @@ namespace TrustchainCore.Data
 
         public IEnumerable<SubjectModel> Select(byte[] trustid)
         {
-            var command = new SQLiteCommand("SELECT * FROM " + TableName + " WHERE trustid = @trustid ORDER BY rowid", Connection);
-            command.Parameters.Add(new SQLiteParameter("@trustid", trustid));
+            using (var command = new SQLiteCommand("SELECT * FROM " + TableName + " WHERE trustid = @trustid ORDER BY rowid", Connection))
+            {
+                command.Parameters.Add(new SQLiteParameter("@trustid", trustid));
 
-            return Query<SubjectModel>(command, NewItem);
+                return Query<SubjectModel>(command, NewItem);
+            }
         }
 
         public SubjectModel NewItem(SQLiteDataReader reader)

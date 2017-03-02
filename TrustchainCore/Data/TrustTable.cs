@@ -34,85 +34,105 @@ namespace TrustchainCore.Data
                 "serversignature BLOB,"+
                 "timestamp TEXT"+
                 ") WITHOUT ROWID";
-            var command = new SQLiteCommand(sql, Connection);
-            var result = command.ExecuteNonQuery();
 
-            command = new SQLiteCommand("CREATE UNIQUE INDEX IF NOT EXISTS " + TableName+ "IssuerId ON " + TableName + " (issuerid ,issuersignature)", Connection);
-            command.ExecuteNonQuery();
+            var result = 0;
+            using (var command = new SQLiteCommand(sql, Connection))
+            {
+                result = command.ExecuteNonQuery();
+            }
 
+            using (var command = new SQLiteCommand("CREATE UNIQUE INDEX IF NOT EXISTS " + TableName + "IssuerId ON " + TableName + " (issuerid ,issuersignature)", Connection))
+            {
+                command.ExecuteNonQuery();
+            }
             //command = new SQLiteCommand("CREATE INDEX IF NOT EXISTS " + TableName + "IssuerSignature ON " + TableName + " (issuersignature)", Connection);
             //command.ExecuteNonQuery();
             return result;
+            
         }
 
         public int Add(TrustModel trust)
         {
-            var command = new SQLiteCommand("INSERT INTO " + TableName + " (trustid, version, script, issuerid, issuersignature, serverid, serversignature, timestamp) "+
-                "VALUES (@trustid, @version, @script, @issuerid, @issuersignature, @serverid, @serversignature, @timestamp)", Connection);
-            command.Parameters.Add(new SQLiteParameter("@trustid", trust.TrustId));
-            command.Parameters.Add(new SQLiteParameter("@version", trust.Head.Version));
-            command.Parameters.Add(new SQLiteParameter("@script", trust.Head.Script));
-            command.Parameters.Add(new SQLiteParameter("@issuerid", trust.Issuer.Id));
-            command.Parameters.Add(new SQLiteParameter("@issuersignature", trust.Issuer.Signature));
-            command.Parameters.Add(new SQLiteParameter("@serverid", trust.Server.Id));
-            command.Parameters.Add(new SQLiteParameter("@serversignature", trust.Server.Signature));
-            command.Parameters.Add(new SQLiteParameter("@timestamp", trust.Timestamp.SerializeObject()));
-            return command.ExecuteNonQuery();
+            using (var command = new SQLiteCommand("INSERT INTO " + TableName + " (trustid, version, script, issuerid, issuersignature, serverid, serversignature, timestamp) " +
+                "VALUES (@trustid, @version, @script, @issuerid, @issuersignature, @serverid, @serversignature, @timestamp)", Connection))
+            {
+                command.Parameters.Add(new SQLiteParameter("@trustid", trust.TrustId));
+                command.Parameters.Add(new SQLiteParameter("@version", trust.Head.Version));
+                command.Parameters.Add(new SQLiteParameter("@script", trust.Head.Script));
+                command.Parameters.Add(new SQLiteParameter("@issuerid", trust.Issuer.Id));
+                command.Parameters.Add(new SQLiteParameter("@issuersignature", trust.Issuer.Signature));
+                command.Parameters.Add(new SQLiteParameter("@serverid", trust.Server.Id));
+                command.Parameters.Add(new SQLiteParameter("@serversignature", trust.Server.Signature));
+                command.Parameters.Add(new SQLiteParameter("@timestamp", trust.Timestamp.SerializeObject()));
+                return command.ExecuteNonQuery();
+            }
         }
 
         public int Replace(TrustModel trust)
         {
-            var command = new SQLiteCommand("REPLACE INTO " + TableName + " (trustid, version, script, issuerid, issuersignature, serverid, serversignature, timestamp) " +
-                "VALUES (@trustid, @version, @script, @issuerid, @issuersignature, @serverid, @serversignature, @timestamp)", Connection);
-            command.Parameters.Add(new SQLiteParameter("@trustid", trust.TrustId));
-            command.Parameters.Add(new SQLiteParameter("@version", trust.Head.Version));
-            command.Parameters.Add(new SQLiteParameter("@script", trust.Head.Script));
-            command.Parameters.Add(new SQLiteParameter("@issuerid", trust.Issuer.Id));
-            command.Parameters.Add(new SQLiteParameter("@issuersignature", trust.Issuer.Signature));
-            command.Parameters.Add(new SQLiteParameter("@serverid", trust.Server.Id));
-            command.Parameters.Add(new SQLiteParameter("@serversignature", trust.Server.Signature));
-            command.Parameters.Add(new SQLiteParameter("@timestamp", trust.Timestamp.SerializeObject()));
-            return command.ExecuteNonQuery();
+            using (var command = new SQLiteCommand("REPLACE INTO " + TableName + " (trustid, version, script, issuerid, issuersignature, serverid, serversignature, timestamp) " +
+                "VALUES (@trustid, @version, @script, @issuerid, @issuersignature, @serverid, @serversignature, @timestamp)", Connection))
+            {
+                command.Parameters.Add(new SQLiteParameter("@trustid", trust.TrustId));
+                command.Parameters.Add(new SQLiteParameter("@version", trust.Head.Version));
+                command.Parameters.Add(new SQLiteParameter("@script", trust.Head.Script));
+                command.Parameters.Add(new SQLiteParameter("@issuerid", trust.Issuer.Id));
+                command.Parameters.Add(new SQLiteParameter("@issuersignature", trust.Issuer.Signature));
+                command.Parameters.Add(new SQLiteParameter("@serverid", trust.Server.Id));
+                command.Parameters.Add(new SQLiteParameter("@serversignature", trust.Server.Signature));
+                command.Parameters.Add(new SQLiteParameter("@timestamp", trust.Timestamp.SerializeObject()));
+                return command.ExecuteNonQuery();
+            }
         }
 
 
 
         public IEnumerable<TrustModel> Select()
         {
-            var command = new SQLiteCommand("SELECT * FROM " + TableName, Connection);
-            return Query<TrustModel>(command, NewItem);
+            using (var command = new SQLiteCommand("SELECT * FROM " + TableName, Connection))
+            {
+                return Query<TrustModel>(command, NewItem);
+            }
         }
 
         public TrustModel SelectOne(byte[] trustid)
         {
-            var command = new SQLiteCommand("SELECT * FROM " + TableName + " WHERE trustid = @trustid", Connection);
-            command.Parameters.Add(new SQLiteParameter("@trustid", trustid));
+            using (var command = new SQLiteCommand("SELECT * FROM " + TableName + " WHERE trustid = @trustid", Connection))
+            {
+                command.Parameters.Add(new SQLiteParameter("@trustid", trustid));
 
-            return Query<TrustModel>(command, NewItem).FirstOrDefault();
+                return Query<TrustModel>(command, NewItem).FirstOrDefault();
+            }
         }
 
         public IEnumerable<TrustModel> SelectServerUnsigned()
         {
-            var command = new SQLiteCommand("SELECT * FROM " + TableName + " WHERE ifnull(length(serversignature), 0) = 0", Connection);
-            return Query<TrustModel>(command, NewItem);
+            using (var command = new SQLiteCommand("SELECT * FROM " + TableName + " WHERE ifnull(length(serversignature), 0) = 0", Connection))
+            {
+                return Query<TrustModel>(command, NewItem);
+            }
         }
 
 
         public IEnumerable<TrustModel> Select(byte[] issuerId, byte[] signature)
         {
-            var command = new SQLiteCommand("SELECT * FROM " + TableName + " WHERE issuerid = @issuerid AND issuersignature = @issuersignature", Connection);
-            command.Parameters.Add(new SQLiteParameter("@issuerid", issuerId));
-            command.Parameters.Add(new SQLiteParameter("@signature", signature));
+            using (var command = new SQLiteCommand("SELECT * FROM " + TableName + " WHERE issuerid = @issuerid AND issuersignature = @issuersignature", Connection))
+            {
+                command.Parameters.Add(new SQLiteParameter("@issuerid", issuerId));
+                command.Parameters.Add(new SQLiteParameter("@signature", signature));
 
-            return Query<TrustModel>(command, NewItem);
+                return Query<TrustModel>(command, NewItem);
+            }
         }
 
         public int Delete(byte[] issuerId, byte[] signature)
         {
-            var command = new SQLiteCommand("DELETE FROM " + TableName + " WHERE issuerid = @issuerid AND issuersignature = @issuersignature", Connection);
-            command.Parameters.Add(new SQLiteParameter("@issuerid", issuerId));
-            command.Parameters.Add(new SQLiteParameter("@signature", signature));
-            return command.ExecuteNonQuery();
+            using (var command = new SQLiteCommand("DELETE FROM " + TableName + " WHERE issuerid = @issuerid AND issuersignature = @issuersignature", Connection))
+            {
+                command.Parameters.Add(new SQLiteParameter("@issuerid", issuerId));
+                command.Parameters.Add(new SQLiteParameter("@signature", signature));
+                return command.ExecuteNonQuery();
+            }
         }
 
         public TrustModel NewItem(SQLiteDataReader reader)

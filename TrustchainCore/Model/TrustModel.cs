@@ -21,6 +21,10 @@ namespace TrustchainCore.Model
         [JsonProperty(PropertyName = "timestamp")]
         public TimestampCollection Timestamp { get; set; }
 
+        [JsonIgnore]
+        public string DatabaseName { get; set; }
+
+
         public TrustModel()
         {
             Timestamp = new TimestampCollection();
