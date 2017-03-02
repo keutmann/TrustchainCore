@@ -23,6 +23,16 @@ namespace TrustchainCore.Business
 
         public bool Validate()
         {
+            if(trust.Head == null)
+                Errors.Add("Missing Head");
+
+            if (string.IsNullOrEmpty(trust.Head.Script))
+                Errors.Add("Missing Head Script");
+
+            if (string.IsNullOrEmpty(trust.Head.Version))
+                Errors.Add("Missing Head Version");
+
+
             if (trust.Issuer == null)
                 Errors.Add("Missing Issuer");
 

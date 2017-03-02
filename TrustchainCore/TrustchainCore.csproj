@@ -54,7 +54,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Business\DirectoryManager.cs" />
+    <Compile Include="Business\AppDirectory.cs" />
     <Compile Include="Business\ITrustBinary.cs" />
     <Compile Include="Business\MerkleTree.cs" />
     <Compile Include="Business\TrustBinary.cs" />
@@ -86,6 +86,7 @@
     <Compile Include="Model\MerkleNodeModel.cs" />
     <Compile Include="Model\ServerModel.cs" />
     <Compile Include="Model\SubjectModel.cs" />
+    <Compile Include="Model\TimestampCollection.cs" />
     <Compile Include="Model\TimestampModel.cs" />
     <Compile Include="Model\TrustModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

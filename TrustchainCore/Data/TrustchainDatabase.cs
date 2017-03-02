@@ -117,8 +117,6 @@ namespace TrustchainCore.Data
                 return Connection;
             }
 
-
-
             throw new ApplicationException("Not database connection found");
         }
 
