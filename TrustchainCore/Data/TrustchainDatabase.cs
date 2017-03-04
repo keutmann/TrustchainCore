@@ -114,12 +114,26 @@ namespace TrustchainCore.Data
                     //tt.DefaultDbType = System.Data.DbType.
                     //var dd = new SQLiteConnection(;
                 }
+                else
+                {
+                    //sb.DefaultIsolationLevel = System.Data.IsolationLevel.ReadUncommitted;
+                    sb.Flags = SQLiteConnectionFlags.UseConnectionPool;
+                    //tt.NoSharedFlags = false;
+
+                    //sb.JournalMode = SQLiteJournalModeEnum.Default;
+                    sb.Pooling = true;
+                    sb.ReadOnly = false;
+                    sb.Add("cache", "shared");
+                    sb.Add("Compress", "False");
+                    //sb.SyncMode = SynchronizationModes.Normal;
+
+                }
                 Connection = new SQLiteConnection(sb.ConnectionString);
                 Connection.Open();
                 return Connection;
             }
 
-            throw new ApplicationException("Not database connection found");
+            throw new ApplicationException("No database connection found");
         }
 
         /// <summary>
@@ -181,19 +195,20 @@ namespace TrustchainCore.Data
             }
         }
 
-        public TrustModel GetTrust(byte[] issuerid, byte[] issuersignature)
-        {
-            var result = Trust.Select(issuerid, issuersignature).FirstOrDefault();
-            var subjects = Subject.Select(issuerid);
-            result.Issuer.Subjects = subjects.ToArray();
-            return result;
-        }
+        //public TrustModel GetTrust(byte[] issuerid, byte[] issuersignature)
+        //{
+        //    var result = Trust.Select(issuerid, issuersignature).FirstOrDefault();
+        //    var subjects = Subject.Select(issuerid);
+        //    result.Issuer.Subjects = subjects.ToArray();
+        //    return result;
+        //}
 
         public virtual void Dispose()
         {
             if (!IsMemoryDatabase)
             {
                 Connection.Dispose();
+                GC.Collect();
             }
         }
     }

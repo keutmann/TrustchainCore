@@ -35,16 +35,13 @@ namespace TrustchainCore.Data
                 "timestamp TEXT"+
                 ") WITHOUT ROWID";
 
-            var result = 0;
-            using (var command = new SQLiteCommand(sql, Connection))
-            {
-                result = command.ExecuteNonQuery();
-            }
+            var result = ExecuteNonQuery(sql);
+            ExecuteNonQuery("CREATE INDEX IF NOT EXISTS " + TableName + "TrustId ON " + TableName + " (trustid)");
 
-            using (var command = new SQLiteCommand("CREATE UNIQUE INDEX IF NOT EXISTS " + TableName + "IssuerId ON " + TableName + " (issuerid ,issuersignature)", Connection))
-            {
-                command.ExecuteNonQuery();
-            }
+            //using (var command = new SQLiteCommand("CREATE UNIQUE INDEX IF NOT EXISTS " + TableName + "IssuerId ON " + TableName + " (issuerid,issuersignature)", Connection))
+            //{
+            //    command.ExecuteNonQuery();
+            //}
             //command = new SQLiteCommand("CREATE INDEX IF NOT EXISTS " + TableName + "IssuerSignature ON " + TableName + " (issuersignature)", Connection);
             //command.ExecuteNonQuery();
             return result;
@@ -109,18 +106,6 @@ namespace TrustchainCore.Data
         {
             using (var command = new SQLiteCommand("SELECT * FROM " + TableName + " WHERE ifnull(length(serversignature), 0) = 0", Connection))
             {
-                return Query<TrustModel>(command, NewItem);
-            }
-        }
-
-
-        public IEnumerable<TrustModel> Select(byte[] issuerId, byte[] signature)
-        {
-            using (var command = new SQLiteCommand("SELECT * FROM " + TableName + " WHERE issuerid = @issuerid AND issuersignature = @issuersignature", Connection))
-            {
-                command.Parameters.Add(new SQLiteParameter("@issuerid", issuerId));
-                command.Parameters.Add(new SQLiteParameter("@signature", signature));
-
                 return Query<TrustModel>(command, NewItem);
             }
         }
