@@ -17,6 +17,15 @@ namespace TrustchainCore.Extensions
             token[name] = new JValue(val);
         }
 
+        public static string GetStringIgnoreCase(this JObject obj, string name, string defaultValue = null)
+        {
+            if (obj == null)
+                return defaultValue;
+
+            var token = obj.GetValue(name, StringComparison.OrdinalIgnoreCase);
+            return token.ToStringValue(defaultValue);
+        }
+
         public static JValue EnsureProperty(this JToken token, string name, object val)
         {
             if (token == null)

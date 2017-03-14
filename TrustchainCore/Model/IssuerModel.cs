@@ -22,5 +22,12 @@ namespace TrustchainCore.Model
 
         [JsonProperty(PropertyName = "subject")]
         public SubjectModel[] Subjects { get; set; }
+
+        /// <summary>
+        /// Time when the trust was made by the client, included into the hash of the trust and signature.
+        /// </summary>
+        [JsonProperty(PropertyName = "timestamp")]
+        public long Timestamp { get; set; } 
+
     }
 }

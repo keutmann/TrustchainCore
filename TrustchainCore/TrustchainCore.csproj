@@ -72,7 +72,9 @@
     <Compile Include="Extensions\AppDomainExtensions.cs" />
     <Compile Include="Extensions\ByteExtensions.cs" />
     <Compile Include="Extensions\DatetimeExtensions.cs" />
+    <Compile Include="Extensions\DictionaryExtensions.cs" />
     <Compile Include="Extensions\EncoderExtensions.cs" />
+    <Compile Include="Extensions\EnumExtensions.cs" />
     <Compile Include="Extensions\JsonExtensions.cs" />
     <Compile Include="Extensions\MemoryStreamExtensions.cs" />
     <Compile Include="Extensions\SQLiteDataReaderExtensions.cs" />
