@@ -62,6 +62,7 @@
     <Compile Include="Business\TrustManager.cs" />
     <Compile Include="Business\TrustSchema.cs" />
     <Compile Include="Collections\BloomFilter.cs" />
+    <Compile Include="Collections\Generic\ByteArrayComparer.cs" />
     <Compile Include="Configuration\App.cs" />
     <Compile Include="Data\DBTable.cs" />
     <Compile Include="Data\KeyValueTable.cs" />
