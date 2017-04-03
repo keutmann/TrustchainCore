@@ -4,16 +4,13 @@ using System.Collections.Generic;
 namespace TrustchainCore.Model
 {
     [JsonObject(MemberSerialization.OptIn)]
-    public class TrustModel
+    public class PackageModel
     {
-        [JsonProperty(PropertyName = "trustid")]
-        public byte[] TrustId { get; set; }
-
         [JsonProperty(PropertyName = "head", NullValueHandling = NullValueHandling.Ignore)]
         public HeadModel Head { get; set; }
 
-        [JsonProperty(PropertyName = "issuer")]
-        public IssuerModel Issuer { get; set; }
+        [JsonProperty(PropertyName = "trust")]
+        public List<TrustModel> Trust { get; set; }
 
         [JsonProperty(PropertyName = "server", NullValueHandling = NullValueHandling.Ignore)]
         public ServerModel Server { get; set; }
@@ -23,10 +20,5 @@ namespace TrustchainCore.Model
 
         [JsonIgnore]
         public string DatabaseName { get; set; }
-
-        //public TrustModel()
-        //{
-        //    //Timestamp = new TimestampCollection();
-        //}
     }
 }

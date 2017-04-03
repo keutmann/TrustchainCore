@@ -12,23 +12,42 @@ namespace TrustchainCore.Business
 
     public class AppDirectory
     {
+        /// <summary>
+        /// Root path of the Trustchain Application folder
+        /// </summary>
         public static string TrustchainPath { get; set; }
         public static string TrustchainName { get; set; }
 
+        /// <summary>
+        /// Data folder of the Trustchain Application folder
+        /// </summary>
         public static string DataPath { get; set; }
         public static string DataName { get; set; }
 
-        public static string LibraryName { get; set; }
+        /// <summary>
+        /// All Trust packages are located here.
+        /// </summary>
         public static string LibraryPath { get; set; }
+        public static string LibraryName { get; set; }
 
-        public static string BuildName { get; set; }
+        /// <summary>
+        /// Trustbuild data folder, where files are located when building.
+        /// </summary>
         public static string BuildPath { get; set; }
+        public static string BuildName { get; set; }
 
         public static string TorrentName { get; set; }
+        /// <summary>
+        /// TrustTorrent folder for torrent files, the actual shared file is in the library folder.
+        /// </summary>
         public static string TorrentPath { get; set; }
 
         public static string StampName { get; set; }
+        /// <summary>
+        /// Truststamp folder for Stamp database files.
+        /// </summary>
         public static string StampPath { get; set; }
+
 
         static AppDirectory()
         {

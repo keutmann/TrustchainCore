@@ -87,6 +87,7 @@
     <Compile Include="Model\HeadModel.cs" />
     <Compile Include="Model\IssuerModel.cs" />
     <Compile Include="Model\MerkleNodeModel.cs" />
+    <Compile Include="Model\PackageModel.cs" />
     <Compile Include="Model\ServerModel.cs" />
     <Compile Include="Model\SubjectModel.cs" />
     <Compile Include="Model\TimestampCollection.cs" />

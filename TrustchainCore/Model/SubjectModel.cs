@@ -18,7 +18,7 @@ namespace TrustchainCore.Model
         /// <summary>
         /// Not included in the Binary payload for signature verification!
         /// </summary>
-        [JsonProperty(PropertyName = "signature")]
+        [JsonProperty(PropertyName = "signature", NullValueHandling = NullValueHandling.Ignore)]
         public byte[] Signature { get; set; }
 
         [JsonProperty(PropertyName = "claim")]
@@ -37,13 +37,19 @@ namespace TrustchainCore.Model
         public string Scope { get; set; }
 
         /// <summary>
-        /// Non serializeable
+        /// Currently used in TrustGraph
+        /// </summary>
+        public int Timestamp { get; set; }
+
+        /// <summary>
         /// Not included in the Binary payload for signature verification!
+        /// Non serializeable
         /// </summary>
         public byte[] IssuerId { get; set; }
 
         /// <summary>
         /// FOREIGN KEY to a Trust
+        /// Non serializeable
         /// </summary>
         public byte[] TrustId { get; set; }
 
