@@ -67,16 +67,16 @@ namespace TrustchainCore.Business
             LibraryPath = App.Config["libraryfolderpath"].ToStringValue(Path.Combine(DataPath, LibraryName));
             EnsureDirectory(LibraryPath);
 
-            BuildName = App.Config["libraryfoldername"].ToStringValue("Build");
-            BuildPath = App.Config["libraryfolderpath"].ToStringValue(Path.Combine(DataPath, BuildName));
+            BuildName = App.Config["buildfoldername"].ToStringValue("Build");
+            BuildPath = App.Config["buildfolderpath"].ToStringValue(Path.Combine(DataPath, BuildName));
             EnsureDirectory(BuildPath);
 
-            TorrentName = App.Config["libraryfoldername"].ToStringValue("Torrent");
-            TorrentPath = App.Config["libraryfolderpath"].ToStringValue(Path.Combine(DataPath, TorrentName));
+            TorrentName = App.Config["torrentfoldername"].ToStringValue("Torrent");
+            TorrentPath = App.Config["torrentfolderpath"].ToStringValue(Path.Combine(DataPath, TorrentName));
             EnsureDirectory(TorrentPath);
 
-            StampName = App.Config["libraryfoldername"].ToStringValue("Stamp");
-            StampPath = App.Config["libraryfolderpath"].ToStringValue(Path.Combine(DataPath, StampName));
+            StampName = App.Config["stampfoldername"].ToStringValue("Stamp");
+            StampPath = App.Config["stampfolderpath"].ToStringValue(Path.Combine(DataPath, StampName));
             EnsureDirectory(StampPath);
         }
 

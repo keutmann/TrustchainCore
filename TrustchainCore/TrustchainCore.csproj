@@ -58,6 +58,7 @@
     <Compile Include="Business\ITrustBinary.cs" />
     <Compile Include="Business\MerkleTree.cs" />
     <Compile Include="Business\TrustBinary.cs" />
+    <Compile Include="Business\TrustBuilder.cs" />
     <Compile Include="Business\TrustECDSASignature.cs" />
     <Compile Include="Business\TrustManager.cs" />
     <Compile Include="Business\TrustSchema.cs" />

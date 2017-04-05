@@ -16,7 +16,7 @@ namespace TrustchainCore.Service
 
         public TruststampService()
         {
-            Endpoint = new Uri(App.Config["truststampendpoint"].ToStringValue());
+            Endpoint = new Uri(App.Config["truststampendpoint"].ToStringValue("http://localhost:127001"));
         }
 
         public JObject AddProof(byte[] proof)

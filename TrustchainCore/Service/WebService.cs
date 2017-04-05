@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Net;
+using System.Net.Http;
+using System.Text;
 using TrustchainCore.Configuration;
 using TrustchainCore.Extensions;
 
@@ -18,7 +20,9 @@ namespace TrustchainCore.Service
         {
             using (var client = new WebClient())
             {
-                var task = client.UploadStringTaskAsync(url, data);
+                client.Encoding = Encoding.UTF8;
+                client.Headers[HttpRequestHeader.ContentType] = "application/json";
+                var task = client.UploadStringTaskAsync(url, "POST", data);
                 task.Wait(Timeout);
                 if (task.IsCompleted)
                     return task.Result;
@@ -35,6 +39,7 @@ namespace TrustchainCore.Service
         {
             using (var client = new WebClient())
             {
+                client.Encoding = Encoding.UTF8;
                 var task = client.DownloadStringTaskAsync(url);
                 task.Wait(Timeout);
                 if (task.IsCompleted)

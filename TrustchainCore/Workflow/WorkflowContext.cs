@@ -69,17 +69,16 @@ namespace TrustchainCore.Workflow
                 return null;
             var wftype = WorkflowQueue.Dequeue();
             
-            if (!string.IsNullOrEmpty(KeyValue[wftype.Name] as string))
-                return (WorkflowBase)JsonConvert.DeserializeObject(KeyValue[wftype.Name] as string);
-            else
-                return CreateInstance<WorkflowBase>(wftype);
+            var wf = CreateInstance<WorkflowBase>(wftype);
+            return wf;
         }
+        
 
-
-
-        public virtual T CreateInstance<T>(Type type)
+        public virtual WorkflowBase CreateInstance<T>(Type type)
         {
-            return (T)Activator.CreateInstance(type);
+            WorkflowBase wf = (WorkflowBase)Activator.CreateInstance(type);
+            wf.Context = this;
+            return wf;            
         }
 
         public virtual void Enqueue(Type wftype)
