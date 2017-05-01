@@ -29,6 +29,12 @@ namespace TrustchainCore.Extensions
             ms.WriteBytes(bytes);
         }
 
+        public static void WriteInteger(this MemoryStream ms, uint num)
+        {
+            var bytes = BitConverter.GetBytes(num);
+            ms.WriteBytes(bytes);
+        }
+
         public static void WriteLong(this MemoryStream ms, long num)
         {
             var bytes = BitConverter.GetBytes(num);

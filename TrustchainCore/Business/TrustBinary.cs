@@ -41,8 +41,8 @@ namespace TrustchainCore.Business
                     //    ms.WriteString(claim.Value);
                     //}
                     ms.WriteInteger(subject.Cost);
-                    ms.WriteLong(subject.Activate);
-                    ms.WriteLong(subject.Expire);
+                    ms.WriteInteger(subject.Activate);
+                    ms.WriteInteger(subject.Expire);
                     ms.WriteString(subject.Scope);
                 }
 

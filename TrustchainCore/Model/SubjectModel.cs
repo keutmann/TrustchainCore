@@ -28,10 +28,10 @@ namespace TrustchainCore.Model
         public int Cost { get; set; }
 
         [JsonProperty(PropertyName = "activate")]
-        public long Activate { get; set; }
+        public uint Activate { get; set; }
 
         [JsonProperty(PropertyName = "expire")]
-        public long Expire { get; set; }
+        public uint Expire { get; set; }
 
         [JsonProperty(PropertyName = "scope")]
         public string Scope { get; set; }

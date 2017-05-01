@@ -94,8 +94,8 @@ namespace TrustchainCore.Data
                 IdType = reader.GetString("idtype"),
                 Claim = reader.GetString("claim").DeserializeObject<JObject>(),
                 Cost = reader.GetInt32(6),
-                Activate = reader.GetInt64(7),
-                Expire = reader.GetInt64(8),
+                Activate = (uint)reader.GetInt32(7),
+                Expire = (uint)reader.GetInt32(8),
                 Scope = reader.GetString("scope"),
                 TrustId = reader.GetBytes("trustid")
             };
