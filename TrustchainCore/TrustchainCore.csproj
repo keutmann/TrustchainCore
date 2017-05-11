@@ -82,6 +82,8 @@
     <Compile Include="Extensions\SQLiteDataReaderExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Extensions\UriExtensions.cs" />
+    <Compile Include="IOC\IOCAttribute.cs" />
+    <Compile Include="IOC\IOCLifeCycleType.cs" />
     <Compile Include="IO\ErrorEventLoggerTextWriter.cs" />
     <Compile Include="IO\EventLoggerTextWriter.cs" />
     <Compile Include="Model\ClaimModel.cs" />

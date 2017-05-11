@@ -8,6 +8,19 @@ namespace TrustchainCore.Extensions
 {
     public static class ByteExtensions
     {
+
+        public static byte[] Combine2(params byte[][] arrays)
+        {
+            byte[] ret = new byte[arrays.Sum(x => x.Length)];
+            int offset = 0;
+            foreach (byte[] data in arrays)
+            {
+                Buffer.BlockCopy(data, 0, ret, offset, data.Length);
+                offset += data.Length;
+            }
+            return ret;
+        }
+
         public static byte[] Combine(this byte[] left, byte[] right)
         {
             var s = new List<byte>(left);

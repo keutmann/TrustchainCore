@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TrustchainCore.Configuration;
 using TrustchainCore.Data;
 using TrustchainCore.Model;
 
@@ -43,6 +44,8 @@ namespace TrustchainCore.Business
             trust.TrustId = GetTrustId(trust);
         }
 
+
+
         public static byte[] GetTrustId(TrustModel trust)
         {
             return TrustECDSASignature.GetHashOfBinary(GetTrustBinary(trust));
@@ -64,7 +67,7 @@ namespace TrustchainCore.Business
             }
 
             var signature = new TrustECDSASignature(trust);
-            var errors = signature.VerifyTrustSignature();
+            var errors = signature.VerifyTrustSignatureMessage();
             if (errors.Count > 0)
                 throw new ApplicationException(string.Join(". ", errors.ToArray()));
 
