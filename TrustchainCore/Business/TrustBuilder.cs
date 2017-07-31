@@ -1,5 +1,6 @@
 ﻿using NBitcoin;
 using NBitcoin.Crypto;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.Text;
@@ -11,6 +12,45 @@ namespace TrustchainCore.Business
 {
     public class TrustBuilder
     {
+        public PackageModel Package { get; set; }
+
+        public TrustBuilder()
+        {
+            Package = new PackageModel();
+        }
+
+        public TrustBuilder(string content)
+        {
+            Package = JsonConvert.DeserializeObject<PackageModel>(content);
+        }
+
+        public string Serialize(Formatting format)
+        {
+            return JsonConvert.SerializeObject(Package, format);
+        }
+
+        public override string ToString()
+        {
+            return Serialize(Formatting.Indented);
+        }
+
+        public TrustBuilder Verify()
+        {
+            //var schema = new PackageSchema(Package);
+            //if (!schema.Validate())
+            //{
+            //    var msg = string.Join(". ", schema.Errors.ToArray());
+            //    throw new ApplicationException(msg);
+            //}
+
+            //var signature = new TrustECDSASignature(trust);
+            //var errors = signature.VerifyTrustSignatureMessage();
+            //if (errors.Count > 0)
+            //    throw new ApplicationException(string.Join(". ", errors.ToArray()));
+
+            return this;
+        }
+
         public static TrustModel CreateTrust(string issuerName, string subjectName, JObject claim)
         {
             var issuerKey = new Key(Hashes.SHA256(Encoding.UTF8.GetBytes(issuerName)));
