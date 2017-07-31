@@ -13,12 +13,14 @@ namespace TrustchainCore.Model
         [JsonProperty(PropertyName = "id")]
         public byte[] Id { get; set; }
 
+        [JsonProperty(PropertyName = "name", NullValueHandling = NullValueHandling.Ignore)]
+        public string Name { get; set; }
+
         /// <summary>
         /// Not included in the Binary payload for signature verification!
         /// </summary>
         [JsonProperty(PropertyName = "signature")]
         public byte[] Signature { get; set; }
-
 
         [JsonProperty(PropertyName = "subject")]
         public SubjectModel[] Subjects { get; set; }
