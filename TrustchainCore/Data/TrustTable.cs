@@ -58,8 +58,8 @@ namespace TrustchainCore.Data
                 command.Parameters.Add(new SQLiteParameter("@script", trust.Head.Script));
                 command.Parameters.Add(new SQLiteParameter("@issuerid", trust.Issuer.Id));
                 command.Parameters.Add(new SQLiteParameter("@issuersignature", trust.Issuer.Signature));
-                command.Parameters.Add(new SQLiteParameter("@serverid", trust.Server.Id));
-                command.Parameters.Add(new SQLiteParameter("@serversignature", trust.Server.Signature));
+                command.Parameters.Add(new SQLiteParameter("@serverid", (trust.Server != null) ? trust.Server.Id: new byte[] { }));
+                command.Parameters.Add(new SQLiteParameter("@serversignature", (trust.Server != null) ? trust.Server.Signature : new byte[] { }));
                 command.Parameters.Add(new SQLiteParameter("@timestamp", trust.Timestamp.SerializeObject()));
                 return command.ExecuteNonQuery();
             }
@@ -75,8 +75,8 @@ namespace TrustchainCore.Data
                 command.Parameters.Add(new SQLiteParameter("@script", trust.Head.Script));
                 command.Parameters.Add(new SQLiteParameter("@issuerid", trust.Issuer.Id));
                 command.Parameters.Add(new SQLiteParameter("@issuersignature", trust.Issuer.Signature));
-                command.Parameters.Add(new SQLiteParameter("@serverid", trust.Server.Id));
-                command.Parameters.Add(new SQLiteParameter("@serversignature", trust.Server.Signature));
+                command.Parameters.Add(new SQLiteParameter("@serverid", (trust.Server != null) ? trust.Server.Id : new byte[] { }));
+                command.Parameters.Add(new SQLiteParameter("@serversignature", (trust.Server != null) ? trust.Server.Signature : new byte[] { }));
                 command.Parameters.Add(new SQLiteParameter("@timestamp", trust.Timestamp.SerializeObject()));
                 return command.ExecuteNonQuery();
             }

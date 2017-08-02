@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.IO;
 
-namespace TrustchainCore.IO
+namespace TrustchainCore.Diagnostics
 {
     public class ErrorEventLoggerTextWriter : EventLoggerTextWriter
     {

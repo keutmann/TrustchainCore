@@ -23,7 +23,7 @@ namespace TrustchainCore.Service
 
         public virtual void Print()
         {
-            Console.WriteLine(Message+ " - Elapsed milliseconds: " + Watch.ElapsedMilliseconds + " ");
+            Trace.TraceInformation(Message+ " - Elapsed milliseconds: " + Watch.ElapsedMilliseconds + " ");
         }
     }
 }

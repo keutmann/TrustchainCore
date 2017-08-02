@@ -1,8 +1,9 @@
-﻿using NBitcoin;
+﻿using Essential.Diagnostics;
+using NBitcoin;
 using Newtonsoft.Json.Linq;
-using System;
+using System.Diagnostics;
 using System.IO;
-using TrustchainCore.IO;
+using TrustchainCore.Extensions;
 
 namespace TrustchainCore.Configuration
 {
@@ -16,10 +17,20 @@ namespace TrustchainCore.Configuration
         {
         }
 
-        public static void EnableEventLogger()
+        public static void InitializeLogging()
         {
-            Console.SetOut(new EventLoggerTextWriter(Console.Out));
-            Console.SetError(new ErrorEventLoggerTextWriter(Console.Error));
+            var consoleListener = new ColoredConsoleTraceListener();
+            Trace.Listeners.Add(consoleListener);
+            Trace.AutoFlush = true;
+            
+            if (App.Config["filelog"].ToBoolean(true) == true)
+            {
+                var fileListener = new RollingFileTraceListener();
+                
+                //fileListener.Attributes[""] = "";
+                Trace.Listeners.Add(fileListener);
+            }
+
         }
 
         public static void LoadConfigFile(string filename)

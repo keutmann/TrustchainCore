@@ -24,6 +24,11 @@ namespace TrustchainCore.Business
             Package = JsonConvert.DeserializeObject<PackageModel>(content);
         }
 
+        public TrustBuilder(PackageModel package)
+        {
+            Package = package;
+        }
+
         public string Serialize(Formatting format)
         {
             return JsonConvert.SerializeObject(Package, format);

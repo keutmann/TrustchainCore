@@ -6,7 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 
-namespace TrustchainCore.IO
+namespace TrustchainCore.Diagnostics
 {
     public class EventLoggerTextWriter : TextWriter
     {
@@ -24,8 +24,8 @@ namespace TrustchainCore.IO
             Source = GetSource();
             try
             {
-                if (!EventLog.SourceExists(Source))
-                    EventLog.CreateEventSource(Source, "Application");
+                if (!EventLog.SourceExists(Source))  
+                    EventLog.CreateEventSource(Source, "Application"); // Needs admin permissions
             }
             catch
             {
