@@ -12,7 +12,7 @@ namespace TrustchainCore.Model
         [JsonProperty(PropertyName = "id")]
         public byte[] Id { get; set; }
 
-        [JsonProperty(PropertyName = "idtype")]
+        [JsonProperty(PropertyName = "idtype", NullValueHandling = NullValueHandling.Ignore)]
         public string IdType { get; set; }
 
         /// <summary>
@@ -24,16 +24,16 @@ namespace TrustchainCore.Model
         [JsonProperty(PropertyName = "claim")]
         public JObject Claim { get; set; }
 
-        [JsonProperty(PropertyName = "cost")]
+        [JsonProperty(PropertyName = "cost", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public int Cost { get; set; }
 
-        [JsonProperty(PropertyName = "activate")]
+        [JsonProperty(PropertyName = "activate", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public uint Activate { get; set; }
 
-        [JsonProperty(PropertyName = "expire")]
+        [JsonProperty(PropertyName = "expire", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public uint Expire { get; set; }
 
-        [JsonProperty(PropertyName = "scope")]
+        [JsonProperty(PropertyName = "scope", NullValueHandling = NullValueHandling.Ignore)]
         public string Scope { get; set; }
 
         /// <summary>

@@ -6,10 +6,10 @@ namespace TrustchainCore.Model
     [JsonObject(MemberSerialization.OptIn)]
     public class TrustModel : CoreModel
     {
-        [JsonProperty(PropertyName = "trustid")]
+        [JsonProperty(PropertyName = "trustid", NullValueHandling = NullValueHandling.Ignore)]
         public byte[] TrustId { get; set; }
 
-        [JsonProperty(PropertyName = "issuer")]
+        [JsonProperty(PropertyName = "issuer", NullValueHandling = NullValueHandling.Ignore)]
         public IssuerModel Issuer { get; set; }
 
         [JsonIgnore]

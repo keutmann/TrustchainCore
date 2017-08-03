@@ -19,16 +19,16 @@ namespace TrustchainCore.Model
         /// <summary>
         /// Not included in the Binary payload for signature verification!
         /// </summary>
-        [JsonProperty(PropertyName = "signature")]
+        [JsonProperty(PropertyName = "signature", NullValueHandling = NullValueHandling.Ignore)]
         public byte[] Signature { get; set; }
 
-        [JsonProperty(PropertyName = "subject")]
+        [JsonProperty(PropertyName = "subject", NullValueHandling = NullValueHandling.Ignore)]
         public SubjectModel[] Subjects { get; set; }
 
         /// <summary>
         /// Time when the trust was made by the client, included into the hash of the trust and signature.
         /// </summary>
-        [JsonProperty(PropertyName = "timestamp")]
+        [JsonProperty(PropertyName = "timestamp", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public long Timestamp { get; set; } 
 
     }
